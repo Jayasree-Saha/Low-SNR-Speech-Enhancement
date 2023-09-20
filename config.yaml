@@ -1,0 +1,44 @@
+data:
+    partials_n_frames : 160
+    mel_window_step : 10
+
+train:
+    # path
+    speech_root: '/ssd_scratch/cvit/jaya/pretrain'
+    noise_root: '/ssd_scratch/cvit/jaya/VGGSound'
+    
+    # model
+    d_model_spk: 256
+    n_enc_heads: 8
+    n_enc_attn : 4
+    fus_qkv_dim : 256
+    n_out_seq : 100
+    n_dec_heads : 8
+    dec_d_model : 512
+    n_dec_attn : 8
+    reduction_factor : 0.5
+    dropout : 0.1
+    d_output_mel : 80
+    d_output_linear : 257
+
+ 
+
+
+    # train
+    batch_size: 64
+    lr: 0.001
+    reduced_learning_rate: 0.003
+    num_epochs: 100000000
+    steps_per_epoch: 100
+    save_per_epoch: 2
+    num_jobs:  1
+    n_gpu: 4
+
+    #saving model parameters
+    save_freq: 100
+
+
+
+
+
+logdir_path: '/scratch/jaya/logdir'
