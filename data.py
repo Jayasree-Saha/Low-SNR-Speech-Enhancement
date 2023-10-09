@@ -91,23 +91,7 @@ class NoisyCleanPair:
         noise_rms = clean_rms / (10**a) 
         return noise_rms 
 
-    '''
-
-    def add_Noise(self, gt_wav, random_wav, desired_snr):
-
-        samples = len(gt_wav)
-
-        signal_power = np.sum(np.square(np.abs(gt_wav)))/samples
-        noise_power = np.sum(np.square(np.abs(random_wav)))/samples
-
-        k = (signal_power/(noise_power+1e-8)) * (10**(-desired_snr/10))
-
-        scaled_random_wav = np.sqrt(k)*random_wav
-
-        noisy_wav = gt_wav + scaled_random_wav
-
-        return noisy_wav
-    '''
+    
     def addNoise(self, speech, noise, snr):
         speech_rms=self.cal_rms(speech)
         noise_rms=self.cal_rms(noise)
@@ -131,10 +115,10 @@ class NoisyCleanPair:
     def compute_overlapped_mel_slices(self, wav_samples, mel_samples, mels_per_sec, target_frames, word_per_sec=4):
         samples_per_frame_in_wav = int(hparams.sample_rate/word_per_sec)
         samples_per_frame_in_mel = int(mels_per_sec/word_per_sec)
-        overlap_frames_mel= int((mel_samples-target_frames)/(samples_per_frame_in_mel-1))+1
+        stride_frames_mel= int((mel_samples-target_frames)/(samples_per_frame_in_mel-1))+1
         #print("overlap_frames_mel:",overlap_frames_mel)
 
-        overlap_frames_wav=int((wav_samples-target_frames)/(samples_per_frame_in_wav-1))+1
+        stride_frames_wav=int((wav_samples-target_frames)/(samples_per_frame_in_wav-1))+1
 
         
 
@@ -144,12 +128,12 @@ class NoisyCleanPair:
 
             mel_range=np.array([start,start+samples_per_frame_in_mel])
             mel_slices.append(slice(*mel_range))
-            start=start+overlap_frames_mel
+            start=start+stride_frames_mel
 
 
             wav_range=np.array([start,start+samples_per_frame_in_wav])
             wav_slices.append(slice(*wav_range))
-            start_w=start_w+overlap_frames_wav
+            start_w=start_w+stride_frames_wav
 
 
           
