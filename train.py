@@ -87,18 +87,18 @@ def load_checkpoint(path, model, optimizer, reset_optimizer=False):
     
     return model, optimizer, epoch_resume
 
-def train(context_enc, speaker_enc, model, train_loader, args, cfg, logdir, device, iteration):
+def train(speaker_enc, model, train_loader, args, cfg, logdir, device, iteration):
 
     total_batch = len(train_loader)
     print("Total train batch: ", total_batch)
     
     
     total_loss=0
-    context_embed, speaker_embed=[], []
+    speaker_embed=[]
 
     ite=iteration
     # ================ MAIN TRAINNIG LOOP! ===================
-    for epoch in range(epoch_resume+1, cfg['train']['num_epochs']):
+    for epoch in range(cfg['train']['num_epochs']):
 
         progress_bar = tqdm(enumerate(train_loader))
         total_loss = 0.0
@@ -190,7 +190,7 @@ def get_arguments():
     parser.add_argument("-c", '--case', required=False, type=str, default="net1", help='experiment case name')
     parser.add_argument('-cfg','--config_file', default="config.yaml", type=str, help='location of config file')
     parser.add_argument('--checkpoint_dir', default="/scratch/jaya/chkpts",required=False, type=str, help='Folder to save the model')
-    parser.add_argument('--checkpoint_path', default="", type=str, help='Path of the saved model to resume training')
+    parser.add_argument('--checkpoint_path', default="checkpoint_step1500.pt", type=str, help='Path of the saved model to resume training')
     arguments = parser.parse_args()
 
     return arguments
@@ -209,12 +209,12 @@ if __name__ == '__main__':
 
     logdir_train = '{}/train'.format(cfg['logdir_path'])
     
-    c_model=torchaudio.pipelines.WAV2VEC2_ASR_BASE_960H.get_model()
+    
     
     if torch.cuda.device_count()>1:
         speaker_enc = nn.DataParallel(speaker_enc)
     
-    context_enc=c_model.to(device)
+    
 
     
     speaker_enc.to(device)
@@ -254,6 +254,7 @@ if __name__ == '__main__':
 
     
     if args.checkpoint_path is not None:
+        print("args.checkpoint_path:",args.checkpoint_path)
         model, optimizer, iteration = load_checkpoint(os.path.join(args.checkpoint_dir, args.checkpoint_path), model, optimizer)
         print("chkpt is loaded")    
     
@@ -264,7 +265,7 @@ if __name__ == '__main__':
         os.makedirs(checkpoint_dir)
 
 
-    train(context_enc, speaker_enc, model, train_loader, args, cfg, logdir_train, device, iteration)
+    train(speaker_enc, model, train_loader, args, cfg, logdir_train, device, iteration)
 
 
 
