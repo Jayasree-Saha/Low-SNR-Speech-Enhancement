@@ -17,19 +17,8 @@ Official repository for our paper, "An Approach for Speech Enhancement in Low SN
 
 
 ## Abstract
-The proliferation of speech technology applications has led to an un-
-precedented demand for effective speech enhancement techniques,
-particularly in low Signal-to-Noise Ratio (SNR) conditions. This
-research presents a novel approach to speech enhancement, specif-
-ically designed for very low SNR scenarios. Our technique focuses
-on speaker embedding at a granular level and highlights its consis-
-tent impact on enhancing speech quality and improving Automatic
-Speech Recognition (ASR) performance, a significant downstream
-task. Experimental findings demonstrate competitive speech qual-
-ity and substantial enhancements in ASR accuracy compared to
-alternative methods in low SNR situations. The proposed technique
-offers promising advancements in addressing the challenges posed
-by low SNR conditions in speech technology applications.
+The proliferation of speech technology applications has led to an unprecedented demand for effective speech enhancement techniques, particularly in low Signal-to-Noise Ratio (SNR) conditions. This research presents a novel approach to speech enhancement, specifically designed for very low SNR scenarios. Our technique focuses on speaker embedding at a granular level and highlights its consistent impact on enhancing speech quality and improving Automatic Speech Recognition (ASR) performance, a significant downstream
+task. Experimental findings demonstrate competitive speech quality and substantial enhancements in ASR accuracy compared to alternative methods in low SNR situations. The proposed technique offers promising advancements in addressing the challenges posed by low SNR conditions in speech technology applications.
 
 
 ## Demo
